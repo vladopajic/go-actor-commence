@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/vladopajic/go-actor/actor"
 
 	commence "github.com/vladopajic/go-actor-commence"
-	"github.com/vladopajic/go-actor/actor"
 )
 
 func TestCommencer(t *testing.T) {
