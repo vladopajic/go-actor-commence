@@ -16,13 +16,26 @@ func New() *Commencer {
 	}
 }
 
-func (c *Commencer) Wait() {
-	<-c.commenceSigC
+func (c *Commencer) WaitC() <-chan any {
+	return c.commenceSigC
 }
 
 func (c *Commencer) OptOnStart(onStart func(actor.Context)) actor.Option {
 	return actor.OptOnStart(func(ctx actor.Context) {
-		onStart(ctx)
+		if onStart != nil {
+			onStart(ctx)
+		}
+
 		close(c.commenceSigC)
+	})
+}
+
+func (c *Commencer) OptOnStop(onStop func()) actor.Option {
+	return actor.OptOnStop(func() {
+		if onStop != nil {
+			onStop()
+		}
+
+		c.commenceSigC = make(chan any)
 	})
 }
