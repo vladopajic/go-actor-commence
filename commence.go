@@ -3,8 +3,10 @@ package commence
 import "github.com/vladopajic/go-actor/actor"
 
 type Waiter interface {
-	Wait()
+	WaitC() <-chan any
 }
+
+var _ Waiter = (*Commencer)(nil)
 
 type Commencer struct {
 	commenceSigC chan any
